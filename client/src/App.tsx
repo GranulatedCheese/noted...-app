@@ -1,5 +1,11 @@
+import Canvas from "./components/Canvas";
+
 function App() {
-  return <></>;
+  return (
+    <div>
+      <Canvas /> {/*  */}
+    </div>
+  );
 }
 
 export default App;
