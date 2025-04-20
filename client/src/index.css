@@ -2,8 +2,12 @@
 
 body[data-theme="light"] {
   @apply bg-fuchsia-100;
+  @apply text-gray-950;
+  @apply transition-colors duration-300 ease-in-out;
 }
 
 body[data-theme="dark"] {
   @apply bg-gray-800;
+  @apply text-fuchsia-100;
+  @apply transition-colors duration-300 ease-in-out;
 }
