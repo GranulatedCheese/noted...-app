@@ -1,8 +1,10 @@
 import Canvas from "./components/Canvas";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
-    <div>
+    <div id="theme-id">
+      <Sidebar />
       <Canvas /> {/*  */}
     </div>
   );

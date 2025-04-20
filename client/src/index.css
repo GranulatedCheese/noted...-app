@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+body[data-theme="light"] {
+  @apply bg-fuchsia-100;
+}
+
+body[data-theme="dark"] {
+  @apply bg-gray-800;
+}

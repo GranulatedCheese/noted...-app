@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+body[data-theme="dark"] .sidebar-class {
+  @apply bg-gray-800;
+}
+
+body[data-theme="light"] .sidebar-class {
+  @apply bg-fuchsia-100;
+}
