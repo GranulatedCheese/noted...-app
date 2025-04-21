@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@import "../index.css";
+
+.title-class {
+  @apply select-none;
+  @apply text-6xl font-raleway font-black tracking-tighter;
+}
+
+.main-box-class {
+  @apply h-full w-[80%] fixed right-0 top-40 z-10;
+  @apply bg-[#fff8fa];
+}
+
+.vertical-line {
+  @apply border-r-2 h-screen;
+  @apply border-[#b4936e];
+}

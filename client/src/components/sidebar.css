@@ -1,17 +1,37 @@
 @import "tailwindcss";
+@import "../index.css";
 
 body[data-theme="dark"] .sidebar-class {
   @apply bg-gray-800;
+  @apply text-fuchsia-100;
+  @apply transition-colors duration-300 ease-in-out;
 }
 
 body[data-theme="light"] .sidebar-class {
-  @apply bg-fuchsia-100;
+  @apply bg-[#fff8fa];
+  @apply text-[##201c57] font-manrope;
+  @apply transition-colors duration-300 ease-in-out;
 }
 
-/* div {
-  @apply flex justify-end mr-2 mt-2;
+ul {
+  @apply flex flex-col;
+  @apply text-3xl;
 }
 
-nav {
-  @apply grid grid-flow-col justify-items-end;
-} */
+.nav-button {
+  @apply my-2 text-left w-full p-2 py-7 pl-3;
+  @apply border-b-1;
+}
+
+.nav-button:hover {
+  @apply font-bold;
+}
+
+.sidebar-class {
+  @apply fixed top-0 right-0 h-full p-6 pb-4 z-40 flex flex-col justify-between;
+  @apply lg:w-[22%] md:w-[40%] w-[90%];
+}
+
+.theme-button {
+  @apply mt-8 self-end-safe;
+}

@@ -16,7 +16,7 @@ export default function Theme({ onToggle }: SidebarProps) {
   return (
     <div>
       <button onClick={toggleTheme}>
-        {!isThemeActive ? <FiSun size={30} /> : <FiMoon size={30} />}
+        {!isThemeActive ? <FiSun size={45} /> : <FiMoon size={45} />}
       </button>
     </div>
   );
