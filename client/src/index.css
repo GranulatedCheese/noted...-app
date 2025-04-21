@@ -11,3 +11,7 @@ body[data-theme="dark"] {
   @apply text-fuchsia-100;
   @apply transition-colors duration-300 ease-in-out;
 }
+
+Sidebar {
+  @apply align-middle;
+}
