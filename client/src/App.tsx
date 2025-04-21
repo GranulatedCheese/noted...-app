@@ -4,7 +4,7 @@ import Sidebar from "./components/Sidebar";
 function App() {
   return (
     <div id="theme-id">
-      <Canvas /> {/*  */}
+      {/* <Canvas />  */}
       <Sidebar />
     </div>
   );

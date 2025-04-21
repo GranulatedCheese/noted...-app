@@ -7,3 +7,11 @@ body[data-theme="dark"] .sidebar-class {
 body[data-theme="light"] .sidebar-class {
   @apply bg-fuchsia-100;
 }
+
+/* div {
+  @apply flex justify-end mr-2 mt-2;
+}
+
+nav {
+  @apply grid grid-flow-col justify-items-end;
+} */
