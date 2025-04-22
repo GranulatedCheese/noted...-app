@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
-import "./home.css";
+import "../styles/home.css";
 import { ReactTyped } from "react-typed";
 
 export default function Home() {

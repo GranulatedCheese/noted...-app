@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import "../styles/toolbar.css";
 
 export default function Toolbar() {
   const [isVisible, setIsVisible] = useState(false);

@@ -1,5 +1,5 @@
 import { ReactSketchCanvas } from "react-sketch-canvas";
-import "./canvas.css";
+import "../styles/canvas.css";
 
 export default function Canvas() {
   return (

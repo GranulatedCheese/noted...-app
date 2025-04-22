@@ -1,4 +1,4 @@
-import "./sidebar.css";
+import "../styles/sidebar.css";
 import { useEffect, useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import Theme from "./Theme";
