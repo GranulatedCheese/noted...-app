@@ -4,8 +4,11 @@ import Overview from "./pages/Overview";
 import Class from "./pages/Class";
 import Notes from "./pages/Notes";
 import Profile from "./pages/Profile";
+import { useDarkMode } from "./hooks/useDarkMode";
 
 export default function App() {
+  const [isDarkMode] = useDarkMode();
+
   return (
     <Router>
       <Routes>
