@@ -5,6 +5,7 @@ import Class from "./pages/Class";
 import Notes from "./pages/Notes";
 import Profile from "./pages/Profile";
 import { useDarkMode } from "./hooks/useDarkMode";
+import CanvasPage from "./pages/CanvasPage";
 
 export default function App() {
   const [isDarkMode] = useDarkMode();
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/class" element={<Class />} />
         <Route path="/notes" element={<Notes />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/canvas" element={<CanvasPage />} />
       </Routes>
     </Router>
   );
