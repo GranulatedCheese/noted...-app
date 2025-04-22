@@ -1,22 +1,12 @@
-import { useState } from "react";
 import { FiSun, FiMoon } from "react-icons/fi";
+import { useDarkMode } from "../hooks/useDarkMode";
 
-interface SidebarProps {
-  onToggle: (isThemeActive: boolean) => void;
-}
-
-export default function Theme({ onToggle }: SidebarProps) {
-  const [isThemeActive, setTheme] = useState(false);
-  const toggleTheme = () => {
-    const newState = !isThemeActive;
-    setTheme(newState);
-    onToggle(newState); // Coms with parent
-  };
-
+export default function Theme() {
+  const [isDark, setIsDark] = useDarkMode();
   return (
     <div>
-      <button onClick={toggleTheme}>
-        {!isThemeActive ? <FiSun size={45} /> : <FiMoon size={45} />}
+      <button onClick={() => setIsDark(!isDark)}>
+        {!isDark ? <FiSun size={45} /> : <FiMoon size={45} />}
       </button>
     </div>
   );

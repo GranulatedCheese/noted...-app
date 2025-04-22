@@ -5,17 +5,17 @@ import { ReactTyped } from "react-typed";
 
 export default function Home() {
   return (
-    <>
+    <div>
       <div className="flex justify-start z-0 absolute top-0 left-0 h-full w-full pointer-events-none">
         <span className="vertical-line w-80" />
         <span className="vertical-line w-100" />
-        <span className="vertical-line w-160" />
-        <span className="vertical-line w-120" />
-        <span className="vertical-line w-40" />
+        <span className="vertical-line w-140" />
+        <span className="vertical-line w-100" />
+        <span className="vertical-line w-60" />
       </div>
 
       <Sidebar />
-      <div className="flex m-10">
+      <div className="flex m-8 sticky z-30 ">
         <h1 className="title-class inline-flex items-center">
           noted
           <ReactTyped
@@ -27,9 +27,11 @@ export default function Home() {
           />
         </h1>
       </div>
-      <div className="main-box-class z-50">
-        <p>Element</p>
+      <div className="fixed flex justify-center z-30">
+        <p className="heading-class">
+          Where handwriting finds its structure, and ideas take shape.
+        </p>
       </div>
-    </>
+    </div>
   );
 }

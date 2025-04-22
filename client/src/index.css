@@ -8,8 +8,8 @@
 }
 
 body[data-theme="light"] {
-  @apply bg-[#ffce9a];
-  @apply text-[#201c57] font-manrope;
+  @apply bg-[#7f9e1a];
+  @apply text-[#f6f7f8] font-manrope;
   @apply transition-colors duration-300 ease-in-out;
 }
 

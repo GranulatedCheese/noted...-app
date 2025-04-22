@@ -29,7 +29,9 @@ export default function Sidebar() {
         </button>
       </div>
 
-      {isMenuOpen && <div className="fixed inset-0 bg-black/40 z-40"></div>}
+      {isMenuOpen && (
+        <div className="fixed inset-0 bg-black/40 z-40 overlay-class"></div>
+      )}
 
       {isMenuOpen && (
         <nav className="sidebar-class">
@@ -51,7 +53,7 @@ export default function Sidebar() {
             </Link>
           </ul>
           <div className="theme-button">
-            <Theme onToggle={toggleDarkTheme} />
+            <Theme />
           </div>
         </nav>
       )}

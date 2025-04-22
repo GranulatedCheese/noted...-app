@@ -8,23 +8,20 @@ body[data-theme="dark"] .sidebar-class {
 }
 
 body[data-theme="light"] .sidebar-class {
-  @apply bg-[#fff8fa];
-  @apply text-[##201c57] font-manrope;
+  @apply bg-[#7f9e1a];
+  @apply text-[#f6f7f8] font-manrope;
   @apply transition-colors duration-300 ease-in-out;
 }
 
 ul {
   @apply flex flex-col;
-  @apply text-3xl;
+  @apply text-3xl font-semibold;
 }
 
 .nav-button {
   @apply my-2 text-left w-full p-2 py-7 pl-3;
   @apply border-b-1;
-}
-
-.nav-button:hover {
-  @apply font-bold;
+  @apply transition duration-300 delay-75 hover:-translate-y-1 md:hover:scale-105;
 }
 
 .sidebar-class {
@@ -34,4 +31,8 @@ ul {
 
 .theme-button {
   @apply mt-8 self-end-safe;
+}
+
+.overlay-class {
+  @apply transition-all duration-300;
 }

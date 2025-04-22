@@ -3,15 +3,15 @@
 
 .title-class {
   @apply select-none;
-  @apply text-6xl font-raleway font-black tracking-tighter;
-}
-
-.main-box-class {
-  @apply h-full w-[80%] fixed right-0 top-40 z-10;
-  @apply bg-[#fff8fa];
+  @apply text-4xl font-raleway font-bold tracking-tighter;
 }
 
 .vertical-line {
   @apply border-r-2 h-screen;
-  @apply border-[#b4936e];
+  @apply border-[#87A329];
+}
+
+.heading-class {
+  @apply text-[92px] tracking-tighter font-black text-left;
+  @apply fixed z-30 left-179 mt-20 w-220 h-screen;
 }
