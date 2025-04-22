@@ -29,9 +29,6 @@ export default function CanvasPage() {
         const blob = await response.blob();
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
-        link.href = url;
-        link.download = "converted_notes.docx";
-        link.click();
       } else {
         console.error("Server Error:", await response.text());
       }
