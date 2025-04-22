@@ -13,5 +13,5 @@
 
 .heading-class {
   @apply text-[92px] tracking-tighter font-black text-left;
-  @apply fixed z-30 left-179 mt-20 w-220 h-screen;
+  @apply fixed z-30 left-[30%] mt-20 w-220 h-screen;
 }
