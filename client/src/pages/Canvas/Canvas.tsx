@@ -11,9 +11,8 @@ export default function Canvas() {
   const canvasRef = useRef<ReactSketchCanvasRef>(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  const [isColorWheelOpen, setIsColorWheelOpen] = useState(false);
-  const [isStrokeMenuOpen, setIsStrokeMenuOpen] = useState(false);
-  const [isEraserMenuOpen, setIsEraserMenuOpen] = useState(false);
+  type MenuType = "color" | "stroke" | "eraser" | null;
+  const [isMenuOpen, setIsMenuOpen] = useState<MenuType>(null);
 
   const [strokeColor, setStrokeColor] = useState("#f0be0c");
   const [strokeWidth, setStrokeWidth] = useState(5);
@@ -31,37 +30,25 @@ export default function Canvas() {
     setEraserWidth(+event.target.value);
   };
 
-  const closeAllMenus = () => {
-    setIsColorWheelOpen(false);
-    setIsEraserMenuOpen(false);
-    setIsStrokeMenuOpen(false);
-  };
-
   const handleColorWheel = () => {
-    setIsColorWheelOpen(!isColorWheelOpen);
-    setIsEraserMenuOpen(false);
-    setIsStrokeMenuOpen(false);
+    setIsMenuOpen((prev) => (prev === "color" ? null : "color"));
   };
 
   const handleEraserClick = () => {
-    setIsEraserMenuOpen(!isEraserMenuOpen);
-    setIsStrokeMenuOpen(false);
-    setIsColorWheelOpen(false);
     canvasRef.current?.eraseMode(true);
+    setIsMenuOpen((prev) => (prev === "eraser" ? null : "eraser"));
   };
 
   const handlePenClick = () => {
-    setIsEraserMenuOpen(false);
-    setIsStrokeMenuOpen(!isStrokeMenuOpen);
-    setIsColorWheelOpen(false);
     canvasRef.current?.eraseMode(false);
+    setIsMenuOpen((prev) => (prev === "stroke" ? null : "stroke"));
   };
 
   const radiusRef = useRef(300);
 
   useEffect(() => {
     if (!isVisible) {
-      closeAllMenus();
+      setIsMenuOpen(null);
     }
   }, [isVisible]);
 
@@ -108,7 +95,7 @@ export default function Canvas() {
           </button>
         </div>
 
-        {isColorWheelOpen && (
+        {isMenuOpen === "color" && (
           <input
             type="color"
             value={strokeColor}
@@ -117,7 +104,7 @@ export default function Canvas() {
           />
         )}
 
-        {isEraserMenuOpen && (
+        {isMenuOpen === "eraser" && (
           <input
             type="range"
             min="1"
@@ -129,7 +116,7 @@ export default function Canvas() {
           />
         )}
 
-        {isStrokeMenuOpen && (
+        {isMenuOpen === "stroke" && (
           <input
             type="range"
             min="1"
