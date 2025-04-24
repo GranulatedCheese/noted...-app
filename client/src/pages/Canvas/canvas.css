@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@import "../../index.css";
+
+.toolbar-class {
+  @apply fixed left-1/2 top-0 transform -translate-x-1/2;
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.toolbar-div {
+  @apply bg-gray-950 text-white rounded-full;
+  @apply m-2;
+}
+
+button {
+  @apply m-5;
+}
+
+button:hover {
+  @apply -translate-y-1 scale-150;
+  @apply transition duration-150 delay-75;
+}
+
+input {
+  @apply rounded-full w-[10vh];
+}

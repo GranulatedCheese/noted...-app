@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "../index.css";
+@import "../../index.css";
 
 body[data-theme="dark"] .sidebar-class {
   @apply bg-gray-800;

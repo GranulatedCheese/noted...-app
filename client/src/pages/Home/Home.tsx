@@ -1,6 +1,5 @@
-import { Link } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
-import "../styles/home.css";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import "./home.css";
 import { ReactTyped } from "react-typed";
 
 export default function Home() {
@@ -27,10 +26,10 @@ export default function Home() {
           />
         </h1>
       </div>
-      <div className="fixed flex justify-center z-30">
-        <p className="heading-class">
+      <div className="box-content-class">
+        <h2 className="heading">
           Where handwriting finds its structure, and ideas take shape.
-        </p>
+        </h2>
       </div>
     </div>
   );

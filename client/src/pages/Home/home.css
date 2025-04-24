@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "../index.css";
+@import "../../index.css";
 
 .title-class {
   @apply select-none;
@@ -11,7 +11,15 @@
   @apply border-[#87A329];
 }
 
-.heading-class {
+.box-content-class {
+  @apply fixed z-30 w-screen h-screen;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box-content-class h2 {
   @apply text-[92px] tracking-tighter font-black text-left;
-  @apply fixed z-30 left-[30%] mt-20 w-220 h-screen;
+  @apply w-210 absolute top-20;
+  display: inline-flex;
 }

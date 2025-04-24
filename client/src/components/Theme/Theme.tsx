@@ -1,5 +1,5 @@
 import { FiSun, FiMoon } from "react-icons/fi";
-import { useDarkMode } from "../hooks/useDarkMode";
+import { useDarkMode } from "../../hooks/useDarkMode";
 
 export default function Theme() {
   const [isDark, setIsDark] = useDarkMode();

@@ -1,7 +1,7 @@
-import "../styles/sidebar.css";
+import "./sidebar.css";
 import { useEffect, useState } from "react";
 import { FiMenu } from "react-icons/fi";
-import Theme from "./Theme";
+import Theme from "../Theme/Theme";
 import { Link } from "react-router-dom";
 
 export default function Sidebar() {

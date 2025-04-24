@@ -1,6 +1,0 @@
-@import "tailwindcss";
-
-.toolbar-class {
-  @apply fixed left-1/2 top-0 transform -translate-x-1/2;
-  @apply transition-all duration-300 ease-in-out;
-}
