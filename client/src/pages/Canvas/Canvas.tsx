@@ -73,7 +73,7 @@ export default function Canvas() {
     <div>
       <div
         className={
-          "fixed left-1/2 top-0 transform -translate-x-1/2" +
+          "fixed left-[20%] md:left-[50%] top-0 transform -translate-x-1/2 " +
           "transition-all duration-300 delay-75 ease-in-out" +
           (isVisible
             ? "translate-y-0 opacity-100"
