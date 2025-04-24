@@ -15,14 +15,9 @@ export default function Canvas() {
   const [isStrokeMenuOpen, setIsStrokeMenuOpen] = useState(false);
   const [isEraserMenuOpen, setIsEraserMenuOpen] = useState(false);
 
-  const [eraseMode, setEraseMode] = useState(false);
   const [strokeColor, setStrokeColor] = useState("#f0be0c");
   const [strokeWidth, setStrokeWidth] = useState(5);
   const [eraserWidth, setEraserWidth] = useState(10);
-
-  const handleColorWheel = () => {
-    setIsColorWheelOpen(!isColorWheelOpen);
-  };
 
   const handleStrokeColorChange = (event: ChangeEvent<HTMLInputElement>) => {
     setStrokeColor(event.target.value);
@@ -36,17 +31,29 @@ export default function Canvas() {
     setEraserWidth(+event.target.value);
   };
 
-  const handleEraserClick = () => {
-    setEraseMode(true);
-    setIsEraserMenuOpen(true);
+  const closeAllMenus = () => {
+    setIsColorWheelOpen(false);
+    setIsEraserMenuOpen(false);
     setIsStrokeMenuOpen(false);
+  };
+
+  const handleColorWheel = () => {
+    setIsColorWheelOpen(!isColorWheelOpen);
+    setIsEraserMenuOpen(false);
+    setIsStrokeMenuOpen(false);
+  };
+
+  const handleEraserClick = () => {
+    setIsEraserMenuOpen(!isEraserMenuOpen);
+    setIsStrokeMenuOpen(false);
+    setIsColorWheelOpen(false);
     canvasRef.current?.eraseMode(true);
   };
 
   const handlePenClick = () => {
-    setEraseMode(false);
     setIsEraserMenuOpen(false);
-    setIsStrokeMenuOpen(true);
+    setIsStrokeMenuOpen(!isStrokeMenuOpen);
+    setIsColorWheelOpen(false);
     canvasRef.current?.eraseMode(false);
   };
 
@@ -54,16 +61,9 @@ export default function Canvas() {
 
   useEffect(() => {
     if (!isVisible) {
-      setIsColorWheelOpen(false);
-      setIsEraserMenuOpen(false);
-      setIsStrokeMenuOpen(false);
+      closeAllMenus();
     }
   }, [isVisible]);
-
-  useEffect(() => {
-    console.log("VISIBLE:", isVisible);
-    console.log("Pen:", isStrokeMenuOpen, "Eraser:", isEraserMenuOpen);
-  }, [isVisible, isStrokeMenuOpen, isEraserMenuOpen]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -95,15 +95,11 @@ export default function Canvas() {
         style={{ pointerEvents: isVisible ? "auto" : "none" }}
       >
         <div className="toolbar-div">
-          <button type="button" disabled={!eraseMode} onClick={handlePenClick}>
+          <button type="button" onClick={handlePenClick}>
             <FiEdit2 size={iconSize} />
           </button>
 
-          <button
-            type="button"
-            disabled={eraseMode}
-            onClick={handleEraserClick}
-          >
+          <button type="button" onClick={handleEraserClick}>
             <FiMinusSquare size={iconSize} />
           </button>
 
