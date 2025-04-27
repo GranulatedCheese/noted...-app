@@ -3,7 +3,13 @@ import {
   type ReactSketchCanvasRef,
   ReactSketchCanvas,
 } from "react-sketch-canvas";
-import { FiEdit2, FiMinusSquare, FiChrome } from "react-icons/fi";
+import {
+  FiEdit2,
+  FiMinusSquare,
+  FiChrome,
+  FiCornerUpLeft,
+  FiCornerUpRight,
+} from "react-icons/fi";
 import "./canvas.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
 
@@ -42,6 +48,14 @@ export default function Canvas() {
   const handlePenClick = () => {
     canvasRef.current?.eraseMode(false);
     setIsMenuOpen((prev) => (prev === "stroke" ? null : "stroke"));
+  };
+
+  const handleUndoClick = () => {
+    canvasRef.current?.undo();
+  };
+
+  const handleRedoClick = () => {
+    canvasRef.current?.redo();
   };
 
   const radiusRef = useRef(300);
@@ -92,6 +106,14 @@ export default function Canvas() {
 
           <button type="button" onClick={handleColorWheel}>
             <FiChrome size={iconSize} />
+          </button>
+
+          <button type="button" onClick={handleUndoClick}>
+            <FiCornerUpLeft size={iconSize} />
+          </button>
+
+          <button type="button" onClick={handleRedoClick}>
+            <FiCornerUpRight size={iconSize} />
           </button>
         </div>
 
