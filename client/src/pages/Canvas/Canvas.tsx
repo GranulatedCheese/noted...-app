@@ -24,8 +24,6 @@ export default function Canvas() {
   const [strokeWidth, setStrokeWidth] = useState(5);
   const [eraserWidth, setEraserWidth] = useState(10);
 
-  const [count, setCount] = useState(0);
-
   const handleStrokeColorChange = (event: ChangeEvent<HTMLInputElement>) => {
     setStrokeColor(event.target.value);
   };
@@ -68,13 +66,13 @@ export default function Canvas() {
     }
   }, [isVisible]);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCount((prevCount) => prevCount + 1);
-    }, 1000);
+  // useEffect(() => {                        // AUTOSAVE FUNCTION FOR LATER
+  //   const intervalId = setInterval(() => {
+  //     canvasRef.current?.exportSvg();
+  //   }, 15000);
 
-    return () => clearInterval(intervalId);
-  }, []);
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -172,7 +170,6 @@ export default function Canvas() {
           eraserWidth={eraserWidth}
         />
       </div>
-      <p>Count: {count}</p>
       <Sidebar />
     </div>
   );
