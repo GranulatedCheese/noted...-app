@@ -66,14 +66,6 @@ export default function Canvas() {
     }
   }, [isVisible]);
 
-  // useEffect(() => {                        // AUTOSAVE FUNCTION FOR LATER
-  //   const intervalId = setInterval(() => {
-  //     canvasRef.current?.exportSvg();
-  //   }, 15000);
-
-  //   return () => clearInterval(intervalId);
-  // }, []);
-
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       const centerX = window.innerWidth / 2;
