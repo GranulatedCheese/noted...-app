@@ -13,6 +13,9 @@ import {
 import "./canvas.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
 
+const iconSize = 30;
+const API_URL = "http://localhost:8000/api";
+
 export default function Canvas() {
   const canvasRef = useRef<ReactSketchCanvasRef>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -36,18 +39,22 @@ export default function Canvas() {
     setEraserWidth(+event.target.value);
   };
 
+  const toggleMenu = (menuName: MenuType) => {
+    setIsMenuOpen((prevMenu) => (prevMenu === menuName ? null : menuName));
+  };
+
   const handleColorWheel = () => {
-    setIsMenuOpen((prev) => (prev === "color" ? null : "color"));
+    toggleMenu("color");
   };
 
   const handleEraserClick = () => {
     canvasRef.current?.eraseMode(true);
-    setIsMenuOpen((prev) => (prev === "eraser" ? null : "eraser"));
+    toggleMenu("eraser");
   };
 
   const handlePenClick = () => {
     canvasRef.current?.eraseMode(false);
-    setIsMenuOpen((prev) => (prev === "stroke" ? null : "stroke"));
+    toggleMenu("stroke");
   };
 
   const handleUndoClick = () => {
@@ -57,6 +64,12 @@ export default function Canvas() {
   const handleRedoClick = () => {
     canvasRef.current?.redo();
   };
+
+  const toolbarClasses = `
+  fixed left-[20%] md:left-[50%] top-0 transform -translate-x-1/2
+  transition-all duration-300 delay-75 ease-in-out
+  ${isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}
+`;
 
   const radiusRef = useRef(300);
 
@@ -81,18 +94,10 @@ export default function Canvas() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const iconSize = 30;
-
   return (
     <div>
       <div
-        className={
-          "fixed left-[20%] md:left-[50%] top-0 transform -translate-x-1/2 " +
-          "transition-all duration-300 delay-75 ease-in-out" +
-          (isVisible
-            ? "translate-y-0 opacity-100"
-            : "-translate-y-full opacity-0")
-        }
+        className={toolbarClasses.trim()}
         style={{ pointerEvents: isVisible ? "auto" : "none" }}
       >
         <div className="toolbar-div">
@@ -122,7 +127,7 @@ export default function Canvas() {
             type="color"
             value={strokeColor}
             onChange={handleStrokeColorChange}
-            className="flex justify-self-end mr-1"
+            className="flex justify-self-center mr-1"
           />
         )}
 
@@ -134,7 +139,7 @@ export default function Canvas() {
             step="1"
             value={eraserWidth}
             onChange={handleEraserWidthChange}
-            className="flex justify-self-center mx-1"
+            className="fixed left-16 mx-1"
           />
         )}
 
@@ -161,6 +166,7 @@ export default function Canvas() {
           strokeWidth={strokeWidth}
           eraserWidth={eraserWidth}
         />
+        <button>Submit</button>
       </div>
       <Sidebar />
     </div>
