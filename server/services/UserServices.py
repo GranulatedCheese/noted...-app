@@ -1,6 +1,6 @@
-from models import User
+from models.User.UserModel import User
 from sqlalchemy.orm import Session
-from schemas import UserCreate
+from models.User.UserSchema import UserCreate
 
 def create_user(db: Session, data: UserCreate):
     user_instance = User(**data.model_dump())
