@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from routes import UserRoutes, ImageRoutes
 
+import db
+
 IMAGEDIR = "images/"
 
 app = FastAPI()
