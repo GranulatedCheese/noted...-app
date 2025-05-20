@@ -1,8 +1,12 @@
 from models.User.UserModel import User
 from sqlalchemy.orm import Session
-from models.User.UserSchema import UserCreate
+from models.User.UserSchema import UserBase
 
-def create_user(db: Session, data: UserCreate):
+from services import PasswordServices as pds
+
+def create_user(db: Session, data: UserBase):
+    # hashed_password = pds.pwd_context.hash(data.password)
+    #                                       , hashed_password=hashed_password
     user_instance = User(**data.model_dump())
     db.add(user_instance)
     db.commit()
@@ -10,8 +14,11 @@ def create_user(db: Session, data: UserCreate):
 
     return user_instance
 
-def get_users(db: Session):
+def get_all_users(db: Session):
     return db.query(User).all()
+
+def get_user_by_username(db: Session, username: str):
+    return db.query(User).filter(User.username == username).first()
 
 def delete_user(db: Session, user_id: int):
     user_instance = db.query(User).filter(User.id==user_id).first()
@@ -20,7 +27,7 @@ def delete_user(db: Session, user_id: int):
 
     return user_instance
 
-def update_user(db: Session, user: UserCreate, user_id: int):
+def update_user(db: Session, user: UserBase, user_id: int):
     user_instance = db.query(User).filter(User.id==user_id).first()
     if user_instance:
         for key, value in user.model_dump().items():
