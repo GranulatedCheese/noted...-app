@@ -1,0 +1,6 @@
+@import "../../index.css";
+
+.title-class {
+  @apply select-none;
+  @apply text-4xl font-raleway font-bold tracking-tighter;
+}

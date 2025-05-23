@@ -1,22 +1,34 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+
+import Lander from "./pages/Lander/Lander";
 import Home from "./pages/Home/Home";
-import Overview from "./pages/Overview/Overview";
-import Class from "./pages/Class/Class";
-import Notes from "./pages/Notes/Notes";
-import Profile from "./pages/Profile/Profile";
-import { useDarkMode } from "./hooks/useDarkMode";
+import ClassNotes from "./pages/Notes/Class/ClassNotes";
+import UserNotes from "./pages/Notes/User/UserNotes";
+import Profile from "./pages/User/Profile";
 import Canvas from "./pages/Canvas/Canvas";
+import Sidebar from "./components/SidebarComponent/Sidebar";
+import Title from "./components/TitleComponent/Title";
 
 export default function App() {
-  const [isDarkMode] = useDarkMode();
+  useEffect(() => {
+    const onLoadFunction = () => {
+      const mode = localStorage.getItem("theme");
+      document.body.dataset.theme = mode!;
+    };
+
+    onLoadFunction();
+  }, []);
 
   return (
     <Router>
+      <Sidebar />
+      <Title />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/overview" element={<Overview />} />
-        <Route path="/class" element={<Class />} />
-        <Route path="/notes" element={<Notes />} />
+        <Route path="/" element={<Lander />} />
+        {/* <Route path="/home" element={<Home />} /> for signed users*/}
+        <Route path="/class-notes" element={<ClassNotes />} />
+        <Route path="/user-notes" element={<UserNotes />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/canvas" element={<Canvas />} />
       </Routes>

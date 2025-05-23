@@ -11,7 +11,6 @@ import {
   FiCornerUpRight,
 } from "react-icons/fi";
 import "./canvas.css";
-import Sidebar from "../../components/Sidebar/Sidebar";
 
 const iconSize = 30;
 const API_URL = "http://localhost:8000/api";
@@ -168,7 +167,6 @@ export default function Canvas() {
         />
         <button>Submit</button>
       </div>
-      <Sidebar />
     </div>
   );
 }

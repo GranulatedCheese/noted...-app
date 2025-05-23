@@ -5,15 +5,6 @@
   @apply m-2;
 }
 
-button {
-  @apply m-5;
-}
-
-button:hover {
-  @apply -translate-y-1 scale-150;
-  @apply transition duration-150 delay-75;
-}
-
 input {
   @apply rounded-full w-[10vh];
 }

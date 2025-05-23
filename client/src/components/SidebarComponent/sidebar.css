@@ -1,14 +1,8 @@
 @import "../../index.css";
 
-body[data-theme="dark"] .sidebar-class {
-  @apply bg-gray-800;
-  @apply text-fuchsia-100;
-  @apply transition-colors duration-300 ease-in-out;
-}
-
-body[data-theme="light"] .sidebar-class {
-  @apply bg-[#7f9e1a];
-  @apply text-[#f6f7f8] font-manrope;
+body .sidebar-class {
+  @apply bg-[#7f9e1a] dark:bg-gray-800;
+  @apply text-[#f6f7f8] dark:text-fuchsia-100 font-manrope;
   @apply transition-colors duration-300 ease-in-out;
 }
 
@@ -20,7 +14,6 @@ ul {
 .nav-button {
   @apply my-2 text-left w-full p-2 py-7 pl-3;
   @apply border-b-1;
-  @apply transition duration-300 delay-75 hover:-translate-y-1 md:hover:scale-105;
 }
 
 .sidebar-class {

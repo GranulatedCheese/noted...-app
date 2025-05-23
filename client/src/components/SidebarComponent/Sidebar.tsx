@@ -1,7 +1,7 @@
 import "./sidebar.css";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiMenu } from "react-icons/fi";
-import Theme from "../Theme/Theme";
+import Theme from "../ThemeComponent/Theme";
 import { Link } from "react-router-dom";
 
 export default function Sidebar() {
@@ -21,7 +21,7 @@ export default function Sidebar() {
       <div className="fixed top-6 right-6 z-50">
         <button onClick={toggleMenu}>
           <FiMenu
-            size={45}
+            size={50}
             className={`transition duration-150 ${
               isMenuOpen ? "rotate-90" : ""
             }`}
@@ -29,22 +29,28 @@ export default function Sidebar() {
         </button>
       </div>
 
-      {isMenuOpen && (
-        <div className="fixed inset-0 bg-black/40 z-40 overlay-class"></div>
-      )}
+      <div
+        className={`transition duration-300 delay-150 ${
+          isMenuOpen ? "fixed inset-0 bg-black/40 z-40 overlay-class" : ""
+        }`}
+      />
 
-      {isMenuOpen && (
+      <div
+        className={`transition duration-300 delay-75 ease-in-out ${
+          isMenuOpen ? "" : "translate-x-[100%]"
+        }`}
+      >
         <nav className="sidebar-class">
-          <ul className="mt-10">
+          <ul className="mt-10" onClick={() => setIsMenuOpen(false)}>
             <Link to={"/overview"}>
               <button className="nav-button">home.</button>
             </Link>
 
-            <Link to={"/class"}>
+            <Link to={"/class-notes"}>
               <button className="nav-button">class.</button>
             </Link>
 
-            <Link to={"/notes"}>
+            <Link to={"/user-notes"}>
               <button className="nav-button">notes.</button>
             </Link>
 
@@ -56,7 +62,7 @@ export default function Sidebar() {
             <Theme />
           </div>
         </nav>
-      )}
+      </div>
     </>
   );
 }
