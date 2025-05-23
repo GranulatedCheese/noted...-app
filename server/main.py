@@ -20,6 +20,6 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-app.include_router(UserRoutes.route)
+# app.include_router(UserRoutes.route)
 app.include_router(ImageRoutes.route)
 # db.create_table()
