@@ -2,10 +2,10 @@ from fastapi import File, UploadFile, APIRouter
 from fastapi.responses import FileResponse
 import uuid
 
-IMAGEDIR = "images/"
-route = APIRouter(prefix="/canvas", tags=["canvas"])
+IMAGEDIR = "image/images_uuid/"
+image_router = APIRouter(prefix="/images", tags=["Images"])
 
-@route.post("/upload/")
+@image_router.post("/upload/")
 async def create_upload_file(file: UploadFile = File(...)):
 
     file.filename = f"{uuid.uuid4()}.jpg"
@@ -17,7 +17,7 @@ async def create_upload_file(file: UploadFile = File(...)):
     return {"filename": file.filename}
 
 # for final, "/canvas/{user_id}/{image_uuid}"
-@route.get("/{image_uuid}")
+@image_router.get("/{image_uuid}")
 async def read_file(image_uuid: str):
     path =  f"{IMAGEDIR}{image_uuid}.jpg"
     return FileResponse(path)
