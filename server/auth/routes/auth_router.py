@@ -5,7 +5,7 @@ from auth.models.token import Token
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
-from auth.services.auth_service import authenticate_user, create_access_token, verify_token, invalidate_token
+from auth.services.auth_service import authenticate_user, create_access_token, verify_token
 from core.database import get_db
 
 auth_router = APIRouter(
@@ -33,16 +33,16 @@ async def login_for_access_token(
 
     return Token(access_token=access_token, token_type="bearer")
 
-@auth_router.post("/invalidate-token/{token}")
-async def invalidate_user_token(token: str):
-    invalidate_token(token=token)
-    return {"message": "Invalidated Token"}
+# @auth_router.post("/invalidate-token/{token}")
+# async def invalidate_user_token(token: str):
+#     await invalidate_token(token=token)
+#     return {"message": "Invalidated Token"}
 
 @auth_router.get("/verify-token/{token}")
 async def verify_user_token(token: str):
     try:
-        user_data =  await verify_token(token=token)
-        return {"message": "Valid Token", "user_email": user_data.email}
+        await verify_token(token=token)
+        return {"message": "Valid Token"}
     except HTTPException as e:
         raise e
     except Exception as e:

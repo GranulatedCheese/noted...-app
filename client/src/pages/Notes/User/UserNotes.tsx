@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Loading from "../../../components/LoadingComponent/Loading";
 
 export default function UserNotes() {
   const API_URL = "http://localhost:8000/api";
@@ -9,67 +10,42 @@ export default function UserNotes() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    let isMounted = true;
-    const token = localStorage.getItem("token");
+    const verifyToken = async () => {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${API_URL}/auth/verify-token/${token}`);
 
-    if (!token) {
-      if (isMounted) {
-        setIsLoading(false);
-        setIsAuthenticated(false);
-        navigate("/");
-      }
-      return;
-    }
-
-    const verifyTokenOnMount = async () => {
       try {
-        const response = await fetch(`${API_URL}/auth/verify-token/${token}`);
         if (!response.ok) {
+          console.log("error!", "line 19");
           throw new Error("Token verification failed");
-        }
-
-        if (isMounted) {
+        } else {
           setIsAuthenticated(true);
         }
       } catch (error) {
+        console.log("error!", "line 25");
         localStorage.removeItem("token");
-        if (isMounted) {
-          setIsAuthenticated(false);
-          navigate("/");
-        }
+        setIsAuthenticated(false);
+        navigate("/");
       } finally {
-        if (isMounted) {
+        if (response.ok) {
           setIsLoading(false);
         }
       }
     };
 
-    verifyTokenOnMount();
+    verifyToken();
 
-    return () => {
-      isMounted = false;
-    };
-  }, [navigate, API_URL]);
+    return;
+  }, [navigate]);
 
   const handleLogout = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const token = localStorage.getItem("token");
-
     localStorage.removeItem("token");
     setIsAuthenticated(false);
     navigate("/");
-
-    if (token) {
-      try {
-        await fetch(`${API_URL}/auth/invalidate-token/${token}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        });
-      } catch (error) {
-        console.error("Logout error:", error);
-      }
-    }
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <div>
