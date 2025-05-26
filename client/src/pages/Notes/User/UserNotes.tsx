@@ -48,9 +48,11 @@ export default function UserNotes() {
   if (isLoading) return <Loading />;
 
   return (
-    <div>
-      <h1>Notes, Protected</h1>
-      <button onClick={(e) => handleLogout(e)}>Signout</button>
-    </div>
+    <>
+      <div>
+        <h1>Notes, Protected</h1>
+        <button onClick={(e) => handleLogout(e)}>Signout</button>
+      </div>
+    </>
   );
 }

@@ -1,0 +1,12 @@
+@import "../../index.css";
+
+div.loading-class {
+  @apply flex justify-self-center sticky z-30;
+  @apply p-7;
+  @apply border-1 rounded-full;
+}
+
+p.loading-class {
+  @apply text-4xl font-bold;
+  text-align: center;
+}
