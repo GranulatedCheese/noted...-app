@@ -5,7 +5,7 @@ import uuid
 IMAGEDIR = "image/images_uuid/"
 image_router = APIRouter(prefix="/images", tags=["Images"])
 
-@image_router.post("/upload/")
+@image_router.post("/upload")
 async def create_upload_file(file: UploadFile = File(...)):
 
     file.filename = f"{uuid.uuid4()}.jpg"

@@ -24,7 +24,7 @@ export default function App() {
   return (
     <Router>
       <Sidebar />
-      <Title />
+      {/* <Title /> */}
       <Routes>
         <Route path="/" element={<Lander />} />
         <Route path="/login" element={<Signin />} />

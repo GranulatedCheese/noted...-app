@@ -2,7 +2,11 @@
 
 .toolbar-div {
   @apply bg-gray-950 text-white rounded-full;
-  @apply m-2;
+  @apply m-2 p-3;
+}
+
+.toolbar-div button {
+  @apply p-0.5;
 }
 
 input {

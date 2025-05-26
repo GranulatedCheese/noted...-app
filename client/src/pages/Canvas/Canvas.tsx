@@ -11,11 +11,15 @@ import {
   FiCornerUpRight,
 } from "react-icons/fi";
 import "./canvas.css";
+import { base64ToBlob } from "../../utils/Base64Blob";
+import Loading from "../../components/LoadingComponent/Loading";
 
-const iconSize = 30;
+const iconSize = 40;
 const API_URL = "http://localhost:8000/api";
 
 export default function Canvas() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const canvasRef = useRef<ReactSketchCanvasRef>(null);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -93,6 +97,36 @@ export default function Canvas() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  const handleImageSubmit = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    setIsLoading(true);
+    if (canvasRef.current) {
+      try {
+        const imageData = await canvasRef.current.exportImage("png");
+        const imageBlob = URL.createObjectURL(
+          new Blob([imageData], { type: "image/png" })
+        );
+        console.log(imageBlob);
+        await fetch(`${API_URL}/images/upload`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          body: imageData,
+        });
+
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        console.error("Error exporting image:", error);
+      }
+    }
+  };
+
+  if (isLoading) return <Loading />;
+
   return (
     <div>
       <div
@@ -165,7 +199,12 @@ export default function Canvas() {
           strokeWidth={strokeWidth}
           eraserWidth={eraserWidth}
         />
-        <button>Submit</button>
+        <button
+          className="fixed left-0 top-0 z-1000 m-10 text-2xl p-3 rounded-full bg-black/50"
+          onClick={(e) => handleImageSubmit(e)}
+        >
+          Submit
+        </button>
       </div>
     </div>
   );
