@@ -1,9 +1,10 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, UUID4
 
 
 class UserBase(BaseModel):
     username: str
     email: EmailStr
+    user_uuid: UUID4
 
 
 class UserCreate(UserBase):

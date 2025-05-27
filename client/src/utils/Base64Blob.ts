@@ -1,13 +1,8 @@
-export function base64ToBlob(
-  base64: string,
-  contentType = "",
-  sliceSize = 512
-) {
-  const byteCharacters = atob(base64.split(",")[1]);
+export const base64ToBlob = (str: string, mimeType = "", sliceSize = 512) => {
   const byteArrays = [];
 
-  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-    const slice = byteCharacters.slice(offset, offset + sliceSize);
+  for (let offset = 0; offset < str.length; offset += sliceSize) {
+    const slice = str.slice(offset, offset + sliceSize);
 
     const byteNumbers = new Array(slice.length);
     for (let i = 0; i < slice.length; i++) {
@@ -18,6 +13,5 @@ export function base64ToBlob(
     byteArrays.push(byteArray);
   }
 
-  const blob = new Blob(byteArrays, { type: contentType });
-  return blob;
-}
+  return new Blob(byteArrays, { type: mimeType });
+};

@@ -1,13 +1,15 @@
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import Integer, String, Boolean, DateTime
+from sqlalchemy import Integer, String, Boolean, DateTime, UUID
 from core.database import Base
 from datetime import datetime, timezone
 
+import uuid
 
 class User(Base):
     __tablename__ = 'users'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_uuid: Mapped[UUID] = mapped_column(UUID, default=uuid.uuid4, unique=True, nullable=False)
     username: Mapped[str] = mapped_column(String(32), unique=True, nullable=False)
     email: Mapped[str] = mapped_column(String(64), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(128), nullable=False)

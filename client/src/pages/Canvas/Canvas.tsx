@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, ChangeEvent } from "react";
 import {
   type ReactSketchCanvasRef,
+  ExportImageType,
   ReactSketchCanvas,
 } from "react-sketch-canvas";
 import {
@@ -13,6 +14,7 @@ import {
 import "./canvas.css";
 import { base64ToBlob } from "../../utils/Base64Blob";
 import Loading from "../../components/LoadingComponent/Loading";
+import { Buffer } from "buffer";
 
 const iconSize = 40;
 const API_URL = "http://localhost:8000/api";
@@ -102,21 +104,45 @@ export default function Canvas() {
   ) => {
     event.preventDefault();
     setIsLoading(true);
+
+    const fileExt: any = "png";
+
     if (canvasRef.current) {
       try {
-        const imageDataUrl = await canvasRef.current.exportImage("png");
+        const imageDataUrl: string = await canvasRef.current.exportImage(
+          fileExt
+        ); // Save image as base64
 
-        const imageBase64Data = imageDataUrl.split(",")[1];
-        if (!imageBase64Data) {
-          throw new Error("Invalid data URL Format");
+        // Splits ImageDataURL into 2 parts. "data:image/${fileExt};base64" and "ygsz=="
+        const imageParts: string[] = imageDataUrl.split(",");
+        if (
+          imageParts.length !== 2 ||
+          !imageParts[0]
+            .toLowerCase()
+            .startsWith(`data:image/${fileExt};base64`)
+        ) {
+          console.error("Invalid data URL:", imageDataUrl);
+          throw new Error(
+            `Invalid data URL format: Expected 'data:image/${fileExt};base64,...'`
+          );
         }
 
-        const imageBlob = base64ToBlob(imageBase64Data, "image/png");
+        // Using buffer because atob never worked
+        const imageBase64: string = Buffer.from(
+          imageParts[1],
+          "base64"
+        ).toString("binary");
+
+        const imageBlob: Blob = base64ToBlob(imageBase64, `image/${fileExt}`);
+        if (!imageBlob) {
+          throw new Error("Failed to create Blob from image data.");
+        }
 
         const formData = new FormData();
-        formData.append("file", imageBlob, "canvas_image.png");
+        formData.append("file", imageBlob, `canvas_sketch.${fileExt}`);
 
         const response = await fetch(`${API_URL}/images/upload`, {
+          // Requires binary form data
           method: "POST",
           body: formData,
         });
@@ -134,7 +160,7 @@ export default function Canvas() {
         }
       } catch (error) {
         setIsLoading(false);
-        console.error("Error exporting image:", error);
+        console.error("Client-side error:", error);
       }
     }
   };

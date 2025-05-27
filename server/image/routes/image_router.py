@@ -1,5 +1,6 @@
 from fastapi import File, UploadFile, APIRouter
 from fastapi.responses import FileResponse
+import base64
 import uuid
 
 IMAGEDIR = "image/images_uuid/"
@@ -7,8 +8,7 @@ image_router = APIRouter(prefix="/images", tags=["Images"])
 
 @image_router.post("/upload")
 async def create_upload_file(file: UploadFile = File(...)):
-
-    file.filename = f"{uuid.uuid4()}.jpg"
+    file.filename = f"{uuid.uuid4()}.png"
     contents = await file.read()
 
     with open(f"{IMAGEDIR}{file.filename}", "wb") as f:

@@ -10,13 +10,11 @@ from core.database import get_db
 from user.services.user_service import get_user_by_email
 
 import jwt
-# import redis
 
 SECRET_KEY = settings.JWT_SECRET_KEY
 ALGORITHM = "HS256"
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/token")
-# redis_client = redis.StrictRedis(host='localhost', port=8000, db=get_db)
 
 def authenticate_user(email: str, password: str, db:Session = Depends(get_db)):
     user = get_user_by_email(db, email)
@@ -46,13 +44,6 @@ async def verify_token(token: Annotated[str, Depends(oauth2_scheme)], db: Sessio
     )
     if not token or token == 'null':
         raise credentials_exception
-    
-    # try:
-    #     if redis_client.get(token):
-    #         raise credentials_exception
-    # except Exception as e:
-    #     print(f"Warning: Redis error during token blacklist check: {e}")
-    #     pass
 
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
@@ -68,11 +59,24 @@ async def verify_token(token: Annotated[str, Depends(oauth2_scheme)], db: Sessio
     # return user 
     return payload
 
+# async def authenticate_user_by_token(token: Annotated[str, Depends(oauth2_scheme)]):
+#     credentials_exception = HTTPException(
+#         status_code=status.HTTP_401_UNAUTHORIZED,
+#         detail="Could not validate credentials",
+#         headers={"WWW-Authenticate": "Bearer"},
+#     )
 
-# async def invalidate_token(token: Annotated[str, Depends(oauth2_scheme)]):
-#     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-#     if payload:
-#         redis_client.set(token, "blacklisted")
-#         return {"message": "Invalidated token successfully"}
-#     else:
-#         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
+#     if not token or token == 'null':
+#         raise credentials_exception
+    
+#     try:
+#         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+#         email: str = payload.get('sub')
+#         if email is None:
+#             raise credentials_exception
+    
+#     except InvalidTokenError:
+#         raise credentials_exception
+    
+#     user_uuid: str = get_user_by_email()
+
