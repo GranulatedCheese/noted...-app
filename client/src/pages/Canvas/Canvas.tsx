@@ -104,20 +104,34 @@ export default function Canvas() {
     setIsLoading(true);
     if (canvasRef.current) {
       try {
-        const imageData = await canvasRef.current.exportImage("png");
-        const imageBlob = URL.createObjectURL(
-          new Blob([imageData], { type: "image/png" })
-        );
-        console.log(imageBlob);
-        await fetch(`${API_URL}/images/upload`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          body: imageData,
-        });
+        const imageDataUrl = await canvasRef.current.exportImage("png");
 
+        const imageBase64Data = imageDataUrl.split(",")[1];
+        if (!imageBase64Data) {
+          throw new Error("Invalid data URL Format");
+        }
+
+        const imageBlob = base64ToBlob(imageBase64Data, "image/png");
+
+        const formData = new FormData();
+        formData.append("file", imageBlob, "canvas_image.png");
+
+        const response = await fetch(`${API_URL}/images/upload`, {
+          method: "POST",
+          body: formData,
+        });
         setIsLoading(false);
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error(
+            "Error uploading image...",
+            response.status,
+            response.statusText,
+            errorText
+          );
+          return;
+        }
       } catch (error) {
         setIsLoading(false);
         console.error("Error exporting image:", error);
