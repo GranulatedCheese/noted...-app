@@ -1,39 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../../components/LoadingComponent/Loading";
+import useAuth from "../../../hooks/useAuth";
 
 export default function UserNotes() {
-  const API_URL = "http://localhost:8000/api";
   const navigate = useNavigate();
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const auth = useAuth();
 
   useEffect(() => {
-    const verifyToken = async () => {
-      const token = localStorage.getItem("token");
-      const response = await fetch(`${API_URL}/auth/verify-token/${token}`);
-
-      try {
-        if (!response.ok) {
-          console.log("error!", "line 19");
-          throw new Error("Token verification failed");
-        } else {
-          setIsAuthenticated(true);
-        }
-      } catch (error) {
-        console.log("error!", "line 25");
-        localStorage.removeItem("token");
-        setIsAuthenticated(false);
-        navigate("/");
-      } finally {
-        if (response.ok) {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    verifyToken();
+    auth.verifyToken("/");
 
     return;
   }, [navigate]);
@@ -41,11 +16,11 @@ export default function UserNotes() {
   const handleLogout = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     localStorage.removeItem("token");
-    setIsAuthenticated(false);
+    auth.setIsAuthenticated(false);
     navigate("/");
   };
 
-  if (isLoading) return <Loading />;
+  if (auth.isLoading) return <Loading />;
 
   return (
     <>

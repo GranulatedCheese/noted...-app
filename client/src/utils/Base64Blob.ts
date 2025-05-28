@@ -1,4 +1,8 @@
-export const base64ToBlob = (str: string, mimeType = "", sliceSize = 512) => {
+export const base64ToBlob = (
+  str: string,
+  mimeType: string = "",
+  sliceSize: number = 512
+) => {
   const byteArrays = [];
 
   for (let offset = 0; offset < str.length; offset += sliceSize) {

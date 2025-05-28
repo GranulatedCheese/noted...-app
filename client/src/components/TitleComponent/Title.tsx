@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function Title() {
   return (
-    <div className="flex m-8 sticky z-10 ">
+    <div className="flex m-8 fixed z-35 ">
       <Link to={"/"}>
         <button className="title-class inline-flex items-center">
           noted

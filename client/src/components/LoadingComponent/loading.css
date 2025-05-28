@@ -1,7 +1,7 @@
 @import "../../index.css";
 
 div.loading-class {
-  @apply flex justify-self-center sticky z-30;
+  @apply fixed left-[50%] top-[50%] z-30;
   @apply p-7;
   @apply border-1 rounded-full;
 }

@@ -6,7 +6,7 @@
 }
 
 .toolbar-div button {
-  @apply p-0.5;
+  @apply p-1 mx-2;
 }
 
 input {

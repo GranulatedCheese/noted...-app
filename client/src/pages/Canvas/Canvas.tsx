@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect, ChangeEvent } from "react";
 import {
   type ReactSketchCanvasRef,
-  ExportImageType,
   ReactSketchCanvas,
 } from "react-sketch-canvas";
 import {
@@ -10,17 +9,19 @@ import {
   FiChrome,
   FiCornerUpLeft,
   FiCornerUpRight,
+  FiRefreshCcw,
 } from "react-icons/fi";
 import "./canvas.css";
 import { base64ToBlob } from "../../utils/Base64Blob";
 import Loading from "../../components/LoadingComponent/Loading";
 import { Buffer } from "buffer";
+import useAuth from "../../hooks/useAuth";
 
 const iconSize = 40;
-const API_URL = "http://localhost:8000/api";
 
 export default function Canvas() {
-  const [isLoading, setIsLoading] = useState(false);
+  const auth = useAuth();
+  const API_URL = auth.API_URL;
 
   const canvasRef = useRef<ReactSketchCanvasRef>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -70,6 +71,10 @@ export default function Canvas() {
     canvasRef.current?.redo();
   };
 
+  const handleClearClick = () => {
+    canvasRef.current?.clearCanvas();
+  };
+
   const toolbarClasses = `
   fixed left-[20%] md:left-[50%] top-0 transform -translate-x-1/2
   transition-all duration-300 delay-75 ease-in-out
@@ -103,7 +108,7 @@ export default function Canvas() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
-    setIsLoading(true);
+    auth.setIsLoading(true);
 
     const fileExt: any = "png";
 
@@ -146,7 +151,7 @@ export default function Canvas() {
           method: "POST",
           body: formData,
         });
-        setIsLoading(false);
+        auth.setIsLoading(false);
 
         if (!response.ok) {
           const errorText = await response.text();
@@ -159,16 +164,15 @@ export default function Canvas() {
           return;
         }
       } catch (error) {
-        setIsLoading(false);
+        auth.setIsLoading(false);
         console.error("Client-side error:", error);
       }
     }
   };
 
-  if (isLoading) return <Loading />;
-
   return (
     <div>
+      {auth.isLoading && <Loading />}
       <div
         className={toolbarClasses.trim()}
         style={{ pointerEvents: isVisible ? "auto" : "none" }}
@@ -192,6 +196,10 @@ export default function Canvas() {
 
           <button type="button" onClick={handleRedoClick}>
             <FiCornerUpRight size={iconSize} />
+          </button>
+
+          <button type="button" onClick={handleClearClick}>
+            <FiRefreshCcw size={iconSize} />
           </button>
         </div>
 
@@ -240,7 +248,7 @@ export default function Canvas() {
           eraserWidth={eraserWidth}
         />
         <button
-          className="fixed left-0 top-0 z-1000 m-10 text-2xl p-3 rounded-full bg-black/50"
+          className="fixed left-0 bottom-0 z-1000 m-10 text-2xl p-3 rounded-full bg-black/50"
           onClick={(e) => handleImageSubmit(e)}
         >
           Submit
