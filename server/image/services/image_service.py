@@ -8,21 +8,21 @@ from auth.services.auth_service import get_current_active_user
 
 import uuid
 
-async def create_upload_file(file: UploadFile = File(...), current_user: User = Depends(get_current_active_user), db: Session = Depends(get_db)):
+async def save_image(file: UploadFile, current_user: User, db: Session = Depends(get_db)) -> Image:
     file.filename = str(uuid.uuid4())
-    file_location = "image/static/images/"
+    file_location = f"image/static/images/"
     contents = await file.read()
 
-    with open(f"{file_location}{file.filename}.png", "wb") as f:
+    with open(f"{file_location}{file.filename}.png", "wb+") as f:
         f.write(contents)
 
     db_image = Image(
-        id=file.filename,
-        owner_id=current_user.id,
-        image_data=file_location,
-        is_public=False
+        id = file.filename,
+        owner_id = current_user.id,
+        image_data = file_location,
+        is_public = False
     )
     db.add(db_image)
     db.commit()
     db.refresh(db_image)
-    return {db_image, file.filename}
+    return db_image
