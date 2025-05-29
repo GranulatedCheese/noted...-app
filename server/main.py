@@ -1,29 +1,3 @@
-# from fastapi import FastAPI
-# from routes import ImageRoutes
-# from fastapi.middleware.cors import CORSMiddleware
-
-# import server.core.database as database
-
-# IMAGEDIR = "images/"
-
-# app = FastAPI()
-
-# origins = [
-#     "http://localhost:5173"
-# ]
-
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=origins, 
-#     allow_credentials=True, 
-#     allow_methods=["*"], 
-#     allow_headers=["*"]
-# )
-
-# # app.include_router(UserRoutes.route)
-# app.include_router(ImageRoutes.route)
-# # db.create_table()
-
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from core.config_loader import settings
