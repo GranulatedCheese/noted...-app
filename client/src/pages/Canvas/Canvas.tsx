@@ -112,6 +112,12 @@ export default function Canvas() {
 
     const fileExt: any = "png";
 
+    const token: string | null = localStorage.getItem("token");
+    if (!token) {
+      auth.setIsLoading(false);
+      throw new Error("Token not found! Please log in.");
+    }
+
     if (canvasRef.current) {
       try {
         const imageDataUrl: string = await canvasRef.current.exportImage(
@@ -149,6 +155,9 @@ export default function Canvas() {
         const response = await fetch(`${API_URL}/images/upload`, {
           // Requires binary form data
           method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           body: formData,
         });
         auth.setIsLoading(false);

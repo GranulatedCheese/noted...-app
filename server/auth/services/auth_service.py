@@ -8,6 +8,8 @@ from fastapi import Depends, HTTPException, status
 from datetime import datetime, timedelta, timezone
 from core.database import get_db
 from user.services.user_service import get_user_by_email
+from user.models.user import User
+from auth.models.token import TokenData
 
 import jwt
 
@@ -53,30 +55,31 @@ async def verify_token(token: Annotated[str, Depends(oauth2_scheme)], db: Sessio
     except InvalidTokenError:
         raise credentials_exception
     
-    # user = get_user_by_email(db, email=email)
-    # if user is None:
-    #     raise credentials_exception
-    # return user 
     return payload
 
-# async def authenticate_user_by_token(token: Annotated[str, Depends(oauth2_scheme)]):
-#     credentials_exception = HTTPException(
-#         status_code=status.HTTP_401_UNAUTHORIZED,
-#         detail="Could not validate credentials",
-#         headers={"WWW-Authenticate": "Bearer"},
-#     )
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    if not token or token == 'null':
+        raise credentials_exception
 
-#     if not token or token == 'null':
-#         raise credentials_exception
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            raise credentials_exception
+        token_data = TokenData(email=email)
+    except InvalidTokenError:
+        raise credentials_exception
     
-#     try:
-#         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-#         email: str = payload.get('sub')
-#         if email is None:
-#             raise credentials_exception
-    
-#     except InvalidTokenError:
-#         raise credentials_exception
-    
-#     user_uuid: str = get_user_by_email()
+    user = get_user_by_email(db, email=token_data.email)
+    if user is None:
+        raise credentials_exception
+    return user
+
+async def get_current_active_user(current_user: User = Depends(get_current_user)):
+    return current_user
 

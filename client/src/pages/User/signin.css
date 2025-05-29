@@ -1,0 +1,14 @@
+@import "../../index.css";
+
+.form-class div {
+  @apply p-2 mx-2 ml-7;
+}
+
+.form-class div input {
+  @apply w-50 ml-5 p-0.5 pl-2;
+  @apply border-1 bg-black/30;
+}
+
+form.form-class {
+  @apply absolute top-[10%];
+}

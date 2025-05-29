@@ -8,8 +8,7 @@ import uuid
 class User(Base):
     __tablename__ = 'users'
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_uuid: Mapped[UUID] = mapped_column(UUID, default=uuid.uuid4, unique=True, nullable=False)
+    id: Mapped[UUID] = mapped_column(UUID, default=uuid.uuid4, unique=True, nullable=False, primary_key=True) # user UUID
     username: Mapped[str] = mapped_column(String(32), unique=True, nullable=False)
     email: Mapped[str] = mapped_column(String(64), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(128), nullable=False)

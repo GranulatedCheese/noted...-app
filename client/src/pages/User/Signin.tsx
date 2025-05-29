@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./signin.css";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -54,8 +55,8 @@ export default function Signin() {
   };
 
   return (
-    <div className="mx-7 ml-5">
-      <form onSubmit={(e) => handleSubmit(e)}>
+    <div>
+      <form onSubmit={(e) => handleSubmit(e)} className="form-class">
         <div>
           <label>Email:</label>
           <input
@@ -72,9 +73,11 @@ export default function Signin() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? "Logging in..." : "Login"}
-        </button>
+        <div>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? "Logging in..." : "Login"}
+          </button>
+        </div>
         {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
     </div>

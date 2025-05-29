@@ -62,4 +62,4 @@ app.include_router(auth_router, prefix='/api')
 app.include_router(image_router, prefix="/api", tags=['Images'])
 app.include_router(user_router, prefix='/api', tags=['Users'])
 
-# database.create_table()
+database.create_table()
