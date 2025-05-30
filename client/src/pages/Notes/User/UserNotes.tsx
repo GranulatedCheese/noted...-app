@@ -27,6 +27,15 @@ export default function UserNotes() {
       <div>
         <h1>Notes, Protected</h1>
         <button onClick={(e) => handleLogout(e)}>Signout</button>
+        <div className="fixed bottom-10 left-10">
+          <button
+            onClick={() => {
+              console.log(auth.isAuthenticated);
+            }}
+          >
+            Log
+          </button>
+        </div>
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./signin.css";
+import useAuth from "../../hooks/useAuth";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
@@ -8,7 +9,9 @@ export default function Signin() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const API_URL = "http://localhost:8000/api";
+  const auth = useAuth();
+
+  const API_URL = auth.API_URL;
   const navigate = useNavigate();
 
   const validateForm = () => {

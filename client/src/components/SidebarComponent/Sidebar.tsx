@@ -3,18 +3,12 @@ import React, { useEffect, useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import Theme from "../ThemeComponent/Theme";
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 export default function Sidebar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-  const toggleDarkTheme = (enabled: boolean) => setIsDarkTheme(enabled);
-
-  useEffect(() => {
-    const theme = isDarkTheme ? "dark" : "light";
-    document.body.dataset.theme = theme;
-  }, [isDarkTheme]);
+  const token: string | null = localStorage.getItem("token");
 
   return (
     <>
@@ -41,23 +35,46 @@ export default function Sidebar() {
         }`}
       >
         <nav className="sidebar-class">
-          <ul className="mt-10" onClick={() => setIsMenuOpen(false)}>
-            <Link to={"/overview"}>
-              <button className="nav-button">home.</button>
-            </Link>
+          {token ? (
+            <ul className="mt-10" onClick={() => setIsMenuOpen(false)}>
+              <Link to={"/overview"}>
+                <button className="nav-button">home.</button>
+              </Link>
 
-            <Link to={"/class-notes"}>
-              <button className="nav-button">class.</button>
-            </Link>
+              <Link to={"/class-notes"}>
+                <button className="nav-button">class.</button>
+              </Link>
 
-            <Link to={"/user-notes"}>
-              <button className="nav-button">notes.</button>
-            </Link>
+              <Link to={"/user-notes"}>
+                <button className="nav-button">notes.</button>
+              </Link>
 
-            <Link to={"/profile"}>
-              <button className="nav-button border-none">profile.</button>
-            </Link>
-          </ul>
+              <Link to={"/profile"}>
+                <button className="nav-button border-none">profile.</button>
+              </Link>
+            </ul>
+          ) : (
+            <ul className="mt-10" onClick={() => setIsMenuOpen(false)}>
+              <Link to={"/"}>
+                <button className="nav-button">home.</button>
+              </Link>
+
+              <button className="nav-button">about.</button>
+              <button className="nav-button">contact.</button>
+
+              <div className="flex flex-row">
+                <Link to={"/sign-up"}>
+                  <button className="nav-button-auth">signup.</button>
+                </Link>
+
+                <div className="ml-2 border-l-1" />
+
+                <Link to={"/login"}>
+                  <button className="nav-button-auth">login.</button>
+                </Link>
+              </div>
+            </ul>
+          )}
           <div className="theme-button">
             <Theme />
           </div>
