@@ -1,8 +1,14 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
 
 // USE CLERK !!!!! REMAKING WHOLE AUTH PROCESS
 
+=======
+import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+
+>>>>>>> a6f5d5109368b02173db7ae7d74e3378bf5f1aba
 export default function Signup() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -10,12 +16,23 @@ export default function Signup() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+<<<<<<< HEAD
   const API_URL = "http://localhost:8000/api";
   const navigate = useNavigate();
 
   const validateForm = () => {
     if (!email || !password || !username) {
       setError("Uh oh! Something is missing. Please fill in all fields.");
+=======
+  const auth = useAuth();
+
+  const API_URL = auth.API_URL;
+  const navigate = useNavigate();
+
+  const validateForm = () => {
+    if (!email || !password) {
+      setError("Uh oh! Username or password is missing.");
+>>>>>>> a6f5d5109368b02173db7ae7d74e3378bf5f1aba
       return false;
     }
     setError("");
@@ -27,6 +44,7 @@ export default function Signup() {
     if (!validateForm()) return;
     setIsLoading(true);
 
+<<<<<<< HEAD
     const formDetails = new URLSearchParams();
     formDetails.append("username", username);
     formDetails.append("email", email);
@@ -46,6 +64,28 @@ export default function Signup() {
         signinDetails.append("password", password);
 
         try {
+=======
+    const formDetails = {
+      username: username,
+      email: email,
+      password: password,
+    };
+
+    try {
+      const response: Response = await fetch(`${API_URL}/users/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formDetails),
+      });
+
+      if (response.ok) {
+        try {
+          const formDetails: URLSearchParams = new URLSearchParams();
+          formDetails.append("username", email);
+          formDetails.append("password", password);
+>>>>>>> a6f5d5109368b02173db7ae7d74e3378bf5f1aba
           const response = await fetch(`${API_URL}/auth/token`, {
             method: "POST",
             headers: {
@@ -53,8 +93,13 @@ export default function Signup() {
             },
             body: formDetails,
           });
+<<<<<<< HEAD
 
           setIsLoading(false);
+=======
+          setIsLoading(false);
+          auth.setIsAuthenticated(true);
+>>>>>>> a6f5d5109368b02173db7ae7d74e3378bf5f1aba
 
           if (response.ok) {
             const data = await response.json();
@@ -66,6 +111,7 @@ export default function Signup() {
           }
         } catch (error) {
           setIsLoading(false);
+<<<<<<< HEAD
           setError("An error has occured! Please try again later.");
         }
       } else {
@@ -75,6 +121,16 @@ export default function Signup() {
     } catch (error) {
       setIsLoading(false);
       setError("An error has occured! Please try again later.");
+=======
+          auth.setIsAuthenticated(false);
+          setError("An error occured authenticating! Please try again.");
+        }
+      }
+    } catch (error) {
+      setIsLoading(false);
+      auth.setIsAuthenticated(false);
+      setError("An error has oocured! Please try again.");
+>>>>>>> a6f5d5109368b02173db7ae7d74e3378bf5f1aba
     }
   };
 
@@ -107,7 +163,11 @@ export default function Signup() {
         </div>
         <div>
           <button type="submit" disabled={isLoading}>
+<<<<<<< HEAD
             {isLoading ? "Signing Up..." : "Sign Up"}
+=======
+            {isLoading ? "Signing up..." : "Sign up"}
+>>>>>>> a6f5d5109368b02173db7ae7d74e3378bf5f1aba
           </button>
         </div>
         {error && <p style={{ color: "red" }}>{error}</p>}

@@ -10,6 +10,10 @@ import Canvas from "./pages/Canvas/Canvas";
 import Sidebar from "./components/SidebarComponent/Sidebar";
 import Title from "./components/TitleComponent/Title";
 import Signin from "./pages/User/Signin";
+<<<<<<< HEAD
+=======
+import Loading from "./components/LoadingComponent/Loading";
+>>>>>>> a6f5d5109368b02173db7ae7d74e3378bf5f1aba
 import Signup from "./pages/User/Signup";
 
 export default function App() {
