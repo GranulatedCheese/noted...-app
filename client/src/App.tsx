@@ -10,6 +10,7 @@ import Canvas from "./pages/Canvas/Canvas";
 import Sidebar from "./components/SidebarComponent/Sidebar";
 import Title from "./components/TitleComponent/Title";
 import Signin from "./pages/User/Signin";
+import Signup from "./pages/User/Signup";
 
 export default function App() {
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Lander />} />
         <Route path="/login" element={<Signin />} />
+        <Route path="/sign-up" element={<Signup />} />
         {/* <Route path="/home" element={<Home />} /> for signed users*/}
         <Route path="/class-notes" element={<ClassNotes />} />
         <Route path="/user-notes" element={<UserNotes />} />
